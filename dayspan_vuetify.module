@@ -1,0 +1,44 @@
+<?php
+
+use Drupal\views\ViewExecutable;
+
+/**
+ * @file
+ * Vue views module help and theme functions.
+ */
+
+// Store vue_views preprocess theme functions in a separate .inc file.
+\Drupal::moduleHandler()->loadInclude('dayspan_vuetify', 'inc', 'dayspan_vuetify.theme');
+
+/**
+ * Implements hook_theme().
+ */
+function dayspan_vuetify_theme($existing, $type, $theme, $path) {
+  return array(
+    'dayspan_vuetify' => array(
+      'file' => 'dayspan_vuetify.theme.inc',
+      'template' => 'dayspan-vuetify'
+    ),
+  );
+}
+
+/**
+ * Implements hook_views_pre_render().
+ * Include Vue Views libraries whenever a vue_views view is rendered.
+ */
+function dayspan_vuetify_views_pre_render(ViewExecutable $view) {
+  if (isset($view) && $view->style_plugin->getBaseId()=='dayspan_vuetify') {
+    $viewid = $view->Id();
+    $displayid = $view->current_display;
+    $userid = \Drupal::currentUser()->id();
+    // $view->element['#attached']['library'][] = 'jdrupal/jdrupal';
+    $view->element['#attached']['library'][] = 'dayspan_vuetify/dayspan_vuetify';
+    $view->element['#attached']['drupalSettings']['ds']['view'] = [
+      'viewid' => $viewid,
+      'displayid' => $displayid,
+    ];
+    $view->element['#attached']['drupalSettings']['ds']['userid'] = $userid;
+    $host = \Drupal::request()->getSchemeAndHttpHost();
+    $view->element['#attached']['drupalSettings']['ds']['host'] = $host;
+  }
+}

@@ -1,0 +1,9 @@
+name: Dayspan Vuetify
+type: module
+description: 'Provides a View display style that renders the Dayspan Vuetify calendar plugin.'
+package: Views
+core: '8.x'
+dependencies:
+  - drupal:views
+  - drupal:rest
+  - jdrupal:jdrupal

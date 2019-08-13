@@ -1,0 +1,22 @@
+dayspan_vuetify_resources:
+  remote: https://fonts.googleapis.com
+  license:
+    name: CC
+    gpl-compatible: true
+  css:
+    theme:
+      https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons: { type: external, minified: true }
+dayspan_vuetify:
+  version: 1.0.0
+  license:
+    name: GPL
+    gpl-compatible: true
+  js:
+    app/lib/js/app.js: {}
+    js/test.js: {}
+  css:
+    component:
+      app/lib/css/app.css: {}
+  dependencies:
+    - dayspan_vuetify/dayspan_vuetify_resources
+    - core/drupalSettings

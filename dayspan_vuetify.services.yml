@@ -1,0 +1,3 @@
+services:
+  dayspan_vuetify.global_short_cache:
+    class: '\Drupal\vue_views\Services\GlobalShortCache'
