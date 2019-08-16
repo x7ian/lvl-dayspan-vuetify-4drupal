@@ -6,7 +6,7 @@ use Drupal\rest\Plugin\ResourceBase;
 use Drupal\rest\ResourceResponse;
 
 /**
- * Provides a resource for database watchdog log entries.
+ * Provides a resource to fetch current user data.
  *
  * @RestResource(
  *   id = "current_user",

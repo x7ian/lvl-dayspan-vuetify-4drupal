@@ -1,21 +1,3 @@
-dayspan_vuetify._view_data_counselor:
-  path: '/api/dayspan-vuetify/view-data-counselor/{viewname}/{displayid}/{userid}'
-  defaults:
-    _controller: '\Drupal\dayspan_vuetify\Controller\DayspanVuetifyJsonData::getViewDataCounselor'
-  requirements:
-    _permission: 'access content'
-dayspan_vuetify._view_data_patient:
-  path: '/api/dayspan-vuetify/view-data-patient/{viewname}/{displayid}/{userid}'
-  defaults:
-    _controller: '\Drupal\dayspan_vuetify\Controller\DayspanVuetifyJsonData::getViewDataPatient'
-  requirements:
-    _permission: 'access content'
-dayspan_vuetify.role_users__:
-  path: '/api/dayspan-vuetify/users/{role}'
-  defaults:
-    _controller: '\Drupal\dayspan_vuetify\Controller\DayspanVuetifyJsonData::getRoleUsers'
-  requirements:
-    _permission: 'access content'
 dayspan_vuetify.user:
   path: '/api/dayspan-vuetify/user/{userid}'
   defaults:

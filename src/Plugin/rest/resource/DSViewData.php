@@ -10,7 +10,7 @@ use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\views\Views;
 
 /**
- * Provides a resource for database watchdog log entries.
+ * Provides a resource to fetch view results to be used by Dayspan Vuetify plugin.
  *
  * @RestResource(
  *   id = "ds_view_data",
@@ -25,13 +25,17 @@ class DSViewData extends ResourceBase {
   /**
    * Responds to GET requests.
    *
-   * Returns a watchdog log entry for the specified ID.
+   * Returns list of view results.
    *
-   * @param int $id
-   *   The ID of the watchdog log entry.
+   * @param int $viewid
+   *   The ID name of view.
+   *
+   * @param int $displayid
+   *   The ID name of view diplay.
    *
    * @return \Drupal\rest\ResourceResponse
-   *   The response containing the log entry.
+   *   The response containing the view results formated to be used by dayspan
+   * vuetify plugin.
    *
    * @throws \Symfony\Component\HttpKernel\Exception\NotFoundHttpException
    *   Thrown when the log entry was not found.
@@ -39,7 +43,6 @@ class DSViewData extends ResourceBase {
    *   Thrown when no log entry was provided.
    */
   public function get($viewid=NULL, $displayid=NULL) {
-
     if ($viewid && $displayid) {
       $records = $this->getViewData($viewid, $displayid);
       if (is_array($records)) {
@@ -59,7 +62,7 @@ class DSViewData extends ResourceBase {
   }
 
   /**
-   * list
+   * listing view data
    */
   public function getViewData($viewname, $displayid) {
     $values = [];
@@ -113,10 +116,12 @@ class DSViewData extends ResourceBase {
     foreach($values as $row) {
       $response[] = $this->buildDSEvent($row);
     }
-
     return $response;
   }
 
+  /**
+   * Helper function to format each event in the view listing.
+   */
   function buildDSEvent($row) {
     $color = '#9FA8DA';
     $color = '#cc0000';
@@ -138,16 +143,16 @@ class DSViewData extends ResourceBase {
     return [
       'data' => [
         'nid' => $nid,
-        //'title' => $row['title'],
         'title' => $dateTime,
-       // 'color' => $color,
         'type' => strtolower($type),
-        //'counselor' => $row['field_counselor'],
       ],
       'schedule' => $schedule
     ];
   }
 
+  /**
+   * Helper funtion to format each schedule record for each event
+   */
   function buildScheduleFromDate($dateTime) {
     // 2019-02-27T01:05:19
     list($date, $time) = explode('T', $dateTime);
@@ -162,6 +167,9 @@ class DSViewData extends ResourceBase {
     ];
   }
 
+  /**
+   * Convert a drupal date to the current user timezone date.
+   */
   function convertToUserTimezone($date) {
     $date = new DrupalDateTime($date, 'UTC');
     $date->setTimezone(new \DateTimeZone(drupal_get_user_timezone()));
